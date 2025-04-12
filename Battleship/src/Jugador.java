@@ -1,10 +1,13 @@
+import java.util.Random;
 class Jugador {
-    private String nombre;
-    private Tablero tablero;
+    protected String nombre;
+    protected Tablero tablero;
+    protected Random random;
 
     public Jugador(String nombre) {
         this.nombre = nombre;
         this.tablero = new Tablero();
+        this.random = new Random();
     }
 
     public String getNombre() {
@@ -21,5 +24,15 @@ class Jugador {
 
     public void mostrarTablero() {
         tablero.mostrarTablero();
+    }
+}
+
+class Maquina extends Jugador {
+    public Maquina() {
+        super("Maquina");
+    }
+
+    public int[] generarAtaque() {
+        return new int[]{random.nextInt(5), random.nextInt(5)};
     }
 }

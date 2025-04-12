@@ -21,25 +21,25 @@ class Tablero {
 
     private void colocarBarcosAleatorios() {
         Random rand = new Random();
-        for (int i = 0; i < barcos.length; i++) {
-            int fila, columna;
-            do {
-                fila = rand.nextInt(TAMANO);
-                columna = rand.nextInt(TAMANO);
-            } while (hayBarcoEnPosicion(fila, columna));
-            barcos[i] = new Barco(fila, columna);
+        int i = 0;
+        while (i < barcos.length) {
+            int fila = rand.nextInt(TAMANO);
+            int columna = rand.nextInt(TAMANO);
+            if (!hayBarcoEnPosicion(fila, columna)) {
+                barcos[i] = new Barco(fila, columna);
+                i++;
+            }
         }
     }
 
     public boolean hayBarcoEnPosicion(int fila, int columna) {
         for (Barco barco : barcos) {
-            if (barco != null && barco.estaEnPosicion(fila, columna)) { // Evitar acceder a barcos null
+            if (barco != null && barco.estaEnPosicion(fila, columna)) {
                 return true;
             }
         }
         return false;
     }
-
 
     public boolean disparar(int fila, int columna) {
         for (Barco barco : barcos) {
