@@ -1,12 +1,12 @@
 import java.util.Random;
 class Tablero {
-    private static final int TAMANO = 5;
+    private static final int TAMANO = 10;
     private Barco[] barcos;
     private char[][] tablero;
 
     public Tablero() {
         this.tablero = new char[TAMANO][TAMANO];
-        this.barcos = new Barco[3];
+        this.barcos = new Barco[5]; // Aumentar el número de barcos
         inicializarTablero();
         colocarBarcosAleatorios();
     }
@@ -63,7 +63,14 @@ class Tablero {
     }
 
     public void mostrarTablero() {
+        System.out.print("  ");
+        for (int j = 0; j < TAMANO; j++) {
+            System.out.print(j + " ");
+        }
+        System.out.println();
+
         for (int i = 0; i < TAMANO; i++) {
+            System.out.print(i + " ");
             for (int j = 0; j < TAMANO; j++) {
                 System.out.print(tablero[i][j] + " ");
             }

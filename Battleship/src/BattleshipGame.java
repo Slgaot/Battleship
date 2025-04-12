@@ -21,9 +21,9 @@ public class BattleshipGame {
                 columna = ataque[1];
                 System.out.println("La máquina ataca en: (" + fila + ", " + columna + ")");
             } else {
-                System.out.print("Ingrese fila (0-4): ");
+                System.out.print("Ingrese fila (0-9): ");
                 fila = scanner.nextInt();
-                System.out.print("Ingrese columna (0-4): ");
+                System.out.print("Ingrese columna (0-9): ");
                 columna = scanner.nextInt();
             }
 

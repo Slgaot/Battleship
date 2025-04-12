@@ -33,6 +33,6 @@ class Maquina extends Jugador {
     }
 
     public int[] generarAtaque() {
-        return new int[]{random.nextInt(5), random.nextInt(5)};
+        return new int[]{random.nextInt(10), random.nextInt(10)};
     }
 }
