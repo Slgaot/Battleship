@@ -1,22 +1,34 @@
 class Barco {
-    private int fila, columna;
-    private boolean hundido;
+    private int fila, columna, tamano;
+    private boolean horizontal;
+    private boolean[] partesImpactadas;
 
-    public Barco(int fila, int columna) {
+    public Barco(int fila, int columna, int tamano, boolean horizontal) {
         this.fila = fila;
         this.columna = columna;
-        this.hundido = false;
+        this.tamano = tamano;
+        this.horizontal = horizontal;
+        this.partesImpactadas = new boolean[tamano];
     }
 
     public boolean estaEnPosicion(int fila, int columna) {
-        return this.fila == fila && this.columna == columna;
-    }
-
-    public void hundir() {
-        this.hundido = true;
+        for (int i = 0; i < tamano; i++) {
+            int f = horizontal ? this.fila : this.fila + i;
+            int c = horizontal ? this.columna + i : this.columna;
+            if (f == fila && c == columna) {
+                partesImpactadas[i] = true;
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean estaHundido() {
-        return hundido;
+        for (boolean parte : partesImpactadas) {
+            if (!parte) {
+                return false;
+            }
+        }
+        return true;
     }
 }
