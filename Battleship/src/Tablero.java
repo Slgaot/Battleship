@@ -2,12 +2,14 @@ import java.util.Random;
 class Tablero {
     private static final int TAMANO = 10;
     private Barco[] barcos;
-    private char[][] tablero;
-    private static final int[] TAMANOS_BARCOS = {1, 2, 3, 4, 5};
+    private String[][] tablero;
+    private boolean[][] posicionesAtacadas;
+    private static final int[] TAMANOS_BARCOS = {2, 3, 4};
     private static final int CANTIDAD_BARCOS = 2;
 
     public Tablero() {
-        this.tablero = new char[TAMANO][TAMANO];
+        this.tablero = new String[TAMANO][TAMANO];
+        this.posicionesAtacadas = new boolean[TAMANO][TAMANO];
         this.barcos = new Barco[TAMANOS_BARCOS.length * CANTIDAD_BARCOS];
         inicializarTablero();
         colocarBarcosAleatorios();
@@ -16,7 +18,7 @@ class Tablero {
     private void inicializarTablero() {
         for (int i = 0; i < TAMANO; i++) {
             for (int j = 0; j < TAMANO; j++) {
-                tablero[i][j] = '~';
+                tablero[i][j] = "⏩";
             }
         }
     }
@@ -51,35 +53,9 @@ class Tablero {
         return true;
     }
 
-    public boolean hayBarcoEnPosicion(int fila, int columna) {
-        for (Barco barco : barcos) {
-            if (barco != null && barco.estaEnPosicion(fila, columna)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean disparar(int fila, int columna) {
-        for (Barco barco : barcos) {
-            if (barco.estaEnPosicion(fila, columna)) {
-                if (barco.estaHundido()) {
-                    System.out.println("¡Hundido!");
-                } else {
-                    System.out.println("¡Tocado!");
-                }
-                tablero[fila][columna] = '⛵';
-                return true;
-            }
-        }
-        System.out.println("Agua...");
-        tablero[fila][columna] = '⬛';
-        return false;
-    }
-
     public boolean todosHundidos() {
         for (Barco barco : barcos) {
-            if (!barco.estaHundido()) {
+            if (barco != null && !barco.estaHundido()) {
                 return false;
             }
         }
@@ -96,13 +72,40 @@ class Tablero {
         for (int i = 0; i < TAMANO; i++) {
             System.out.print(i + " ");
             for (int j = 0; j < TAMANO; j++) {
-                if (tablero[i][j] == '~') {
-                    System.out.print("\uD83D\uDD00 ");
-                } else {
-                    System.out.print(tablero[i][j] + " ");
-                }
+                System.out.print(tablero[i][j] + " ");
             }
             System.out.println();
         }
+    }
+
+    public boolean hayBarcoEnPosicion(int fila, int columna) {
+        for (Barco barco : barcos) {
+            if (barco != null && barco.estaEnPosicion(fila, columna)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean posicionAtacada(int fila, int columna) {
+        return posicionesAtacadas[fila][columna];
+    }
+
+    public boolean disparar(int fila, int columna) {
+        posicionesAtacadas[fila][columna] = true;
+        for (Barco barco : barcos) {
+            if (barco != null && barco.estaEnPosicion(fila, columna)) {
+                if (barco.estaHundido()) {
+                    System.out.println("¡Barco Hundido!");
+                } else {
+                    System.out.println("¡Tocado!");
+                }
+                tablero[fila][columna] = "💥";
+                return true;
+            }
+        }
+        System.out.println("Agua...");
+        tablero[fila][columna] = "⬛";
+        return false;
     }
 }

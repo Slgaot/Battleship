@@ -21,16 +21,31 @@ public class BattleshipGame {
                 columna = ataque[1];
                 System.out.println("La máquina ataca en: (" + fila + ", " + columna + ")");
             } else {
-                System.out.print("Ingrese fila (0-9): ");
-                fila = scanner.nextInt();
-                System.out.print("Ingrese columna (0-9): ");
-                columna = scanner.nextInt();
+                while (true) {
+                    try {
+                        System.out.print("Ingrese fila (0-9): ");
+                        fila = scanner.nextInt();
+                        System.out.print("Ingrese columna (0-9): ");
+                        columna = scanner.nextInt();
+                        if (fila >= 0 && fila < 10 && columna >= 0 && columna < 10) {
+                            break;
+                        }
+                        System.out.println("Entrada inválida. Ingrese valores entre 0 y 9.");
+                    } catch (Exception e) {
+                        System.out.println("Entrada inválida. Ingrese un número válido.");
+                        scanner.next(); // Limpiar buffer
+                    }
+                }
             }
 
-            if (actual.atacar(oponente, fila, columna)) {
-                System.out.println("¡Impacto!");
+            if (!oponente.getTablero().posicionAtacada(fila, columna)) {
+                if (actual.atacar(oponente, fila, columna)) {
+                    System.out.println("¡Impacto!");
+                } else {
+                    System.out.println("Agua...");
+                }
             } else {
-                System.out.println("Agua...");
+                System.out.println("Ya has atacado esta posición. Pierdes tu turno.");
             }
 
             if (oponente.haPerdido()) {
@@ -38,7 +53,6 @@ public class BattleshipGame {
                 break;
             }
 
-            // Cambiar turno
             Jugador temp = actual;
             actual = oponente;
             oponente = temp;

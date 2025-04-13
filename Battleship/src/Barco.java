@@ -16,8 +16,10 @@ class Barco {
             int f = horizontal ? this.fila : this.fila + i;
             int c = horizontal ? this.columna + i : this.columna;
             if (f == fila && c == columna) {
-                partesImpactadas[i] = true;
-                return true;
+                if (!partesImpactadas[i]) {
+                    partesImpactadas[i] = true;  // Marcar parte impactada
+                    return true;
+                }
             }
         }
         return false;

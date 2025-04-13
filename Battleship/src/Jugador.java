@@ -15,7 +15,7 @@ class Jugador {
     }
 
     public boolean atacar(Jugador oponente, int fila, int columna) {
-        return oponente.tablero.disparar(fila, columna);
+        return oponente.getTablero().disparar(fila, columna);
     }
 
     public boolean haPerdido() {
@@ -24,6 +24,10 @@ class Jugador {
 
     public void mostrarTablero() {
         tablero.mostrarTablero();
+    }
+
+    public Tablero getTablero() {
+        return tablero;
     }
 }
 
